@@ -39,11 +39,13 @@ def viz_counties():
     daily = "https://www.tn.gov/health/cedep/ncov.html"
     viral = pd.read_html(daily)
     df2 = viral[4]
+    TN_county = df2.drop([59])
+    TN_county["County"]= TN_county["County"].str.split("County", n = 1, expand = True)
     date = datetime.datetime.today()
     date_modify = str(date)
     date_for_export = date_modify[0:10]
-    df2.to_csv('C:/Users/clayf/Documents/HOC/Covid_predictions/TN/Resources/' + date_for_export +'_counties.csv',index=False)
-    viral_counties = df2.to_json(orient='columns')
+    TN_county.to_csv('C:/Users/clayf/Documents/HOC/Covid_predictions/TN/Resources/' + date_for_export +'_counties.csv',index=False)
+    viral_counties = TN_county.to_json(orient='columns')
 
     return viral_counties
 
@@ -53,11 +55,12 @@ def viz_overall():
     daily = "https://www.tn.gov/health/cedep/ncov.html"
     viral = pd.read_html(daily)
     df = viral[0]
+    testing = df.drop([3])
     date = datetime.datetime.today()
     date_modify = str(date)
     date_for_export = date_modify[0:10]
-    df.to_csv('C:/Users/clayf/Documents/HOC/Covid_predictions/TN/Resources/' + date_for_export +'_overall.csv',index=False)
-    viral_overall = df.to_json(orient='columns')
+    testing.to_csv('C:/Users/clayf/Documents/HOC/Covid_predictions/TN/Resources/' + date_for_export +'_overall.csv',index=False)
+    viral_overall = testing.to_json(orient='columns')
 
     return viral_overall
 
@@ -67,11 +70,13 @@ def viz_age():
     daily = "https://www.tn.gov/health/cedep/ncov.html"
     viral = pd.read_html(daily)
     df3 = viral[3]
+    group_cleaned = df3.drop([10])
+    age_groups = group_cleaned.rename(columns={'Age Ranges of Confirmed Cases.1': 'Number_Cases'})
     date = datetime.datetime.today()
     date_modify = str(date)
     date_for_export = date_modify[0:10]
-    df3.to_csv('C:/Users/clayf/Documents/HOC/Covid_predictions/TN/Resources/' + date_for_export +'_age.csv',index=False)
-    viral_age = df3.to_json(orient='columns')
+    age_groups.to_csv('C:/Users/clayf/Documents/HOC/Covid_predictions/TN/Resources/' + date_for_export +'_age.csv',index=False)
+    viral_age = age_groups.to_json(orient='columns')
 
     return viral_age
 
