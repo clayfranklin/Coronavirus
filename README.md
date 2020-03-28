@@ -1,4 +1,4 @@
-# Coronavirus
+# Coronavirus in Tennessee 
 
 <p>Data visualization for TN specific coronavirus cases as of 3/27/2020<p>
 <p>ETL with Python, Flask<p>
