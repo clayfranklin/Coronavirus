@@ -9,6 +9,6 @@
 <p>Limitations on data analysis because testing for coronavirus is extremely limited</p>
 
 
-![Testing Data in TN](https://github.com/clayfranklin/Coronavirus/blob/master/Covid_predictions/TN/Resources/Testing%20Data.png)
+![Testing Data in TN](https://github.com/clayfranklin/Coronavirus/blob/master/Covid_predictions/TN/Resources/Testing_Data.png)
 ![County Data in TN](https://github.com/clayfranklin/Coronavirus/blob/master/Covid_predictions/TN/Resources/Counties.png)
 ![Age Data in TN](https://github.com/clayfranklin/Coronavirus/blob/master/Covid_predictions/TN/Resources/Age_Groups.png)
