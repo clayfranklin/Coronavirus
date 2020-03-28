@@ -44,7 +44,7 @@ def viz_counties():
     date = datetime.datetime.today()
     date_modify = str(date)
     date_for_export = date_modify[0:10]
-    TN_county.to_csv('C:/Users/clayf/Documents/HOC/Covid_predictions/TN/Resources/' + date_for_export +'_counties.csv',index=False)
+    TN_county.to_csv('C:/Users/clayf/Documents/Coronavirus/Covid_predictions/TN/Resources/' + date_for_export +'_counties.csv',index=False)
     viral_counties = TN_county.to_json(orient='columns')
 
     return viral_counties
@@ -59,7 +59,7 @@ def viz_overall():
     date = datetime.datetime.today()
     date_modify = str(date)
     date_for_export = date_modify[0:10]
-    testing.to_csv('C:/Users/clayf/Documents/HOC/Covid_predictions/TN/Resources/' + date_for_export +'_overall.csv',index=False)
+    testing.to_csv('C:/Users/clayf/Documents/Coronavirus/Covid_predictions/TN/Resources/' + date_for_export +'_overall.csv',index=False)
     viral_overall = testing.to_json(orient='columns')
 
     return viral_overall
@@ -75,7 +75,7 @@ def viz_age():
     date = datetime.datetime.today()
     date_modify = str(date)
     date_for_export = date_modify[0:10]
-    age_groups.to_csv('C:/Users/clayf/Documents/HOC/Covid_predictions/TN/Resources/' + date_for_export +'_age.csv',index=False)
+    age_groups.to_csv('C:/Users/clayf/Documents/Coronavirus/Covid_predictions/TN/Resources/' + date_for_export +'_age.csv',index=False)
     viral_age = age_groups.to_json(orient='columns')
 
     return viral_age
