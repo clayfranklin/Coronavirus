@@ -39,7 +39,7 @@ def viz_counties():
     daily = "https://www.tn.gov/health/cedep/ncov.html"
     viral = pd.read_html(daily)
     df2 = viral[4]
-    TN_county = df2.drop([59])
+    TN_county = df2.drop([58,59,60])
     TN_county["County"]= TN_county["County"].str.split("County", n = 1, expand = True)
     date = datetime.datetime.today()
     date_modify = str(date)
