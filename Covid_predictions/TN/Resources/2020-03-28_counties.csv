@@ -1,59 +1,70 @@
 County,Cases
-Anderson ,4
-Bedford ,1
-Benton ,2
-Blount ,6
-Bradley ,6
-Campbell ,4
-Cannon ,2
-Carroll ,4
-Cheatham ,7
-Chester ,2
-Claiborne ,2
-Cocke ,1
-Cumberland ,6
-Davidson ,216
-Dekalb ,3
-Dickson ,9
-Dyer ,3
-Fayette ,3
-Franklin ,3
-Gibson ,2
-Greene ,8
-Grundy ,1
-Hamblen ,2
-Hamilton ,30
-Hardin ,1
-Hawkins ,2
-Houston ,2
-Jefferson ,5
-Knox ,31
-Lewis ,2
-Lincoln ,1
-Loudon ,6
-Macon ,1
-Madison ,3
-Marion ,2
-Maury ,7
-McMinn ,3
-Meigs ,1
-Monroe ,2
-Montgomery ,9
-Overton ,1
-Perry ,2
-Putnam ,13
-Roane ,1
-Robertson ,22
-Rutherford ,39
-Scott ,2
-Sevier ,6
-Shelby ,201
+Anderson,5
+Bedford,1
+Benton,3
+Bledsoe,2
+Blount,9
+Bradley,5
+Campbell,4
+Cannon,3
+Carroll,4
+Carter,1
+Cheatham,7
+Chester,2
+Claiborne,2
+Cocke,1
+Cumberland,6
+Davidson,243
+Decatur,1
+DeKalb,3
+Dickson,11
+Dyer,3
+Fayette,4
+Franklin,3
+Gibson,2
+Greene,8
+Grundy,2
+Hamblen,2
+Hamilton,35
+Hardeman,1
+Hardin,1
+Hawkins,2
+Houston,2
+Jefferson,5
+Johnson,1
+Knox,33
+Lewis,2
+Lincoln,1
+Loudon,6
+Macon,2
+Madison,3
+Marion,4
+Maury,8
+McMinn,3
+Meigs,1
+Monroe,3
+Montgomery,11
+Morgan,1
+Overton,2
+Perry,2
+Putnam,17
+Roane,1
+Robertson,23
+Rutherford,46
+Scott,2
+Sevier,6
+Shelby,269
 Smith,1
-Sullivan ,6
-Sumner ,58
-Tipton ,10
-Unicoi ,1
-Washington ,10
-White ,1
-Williamson ,91
-Wilson ,20
+Sullivan,6
+Sumner,82
+Tipton,11
+Trousdale,1
+Unicoi,1
+Union,1
+Washington,14
+Weakley,1
+White,1
+Williamson,95
+Wilson,20
+Out of TN,148
+Pending,161
