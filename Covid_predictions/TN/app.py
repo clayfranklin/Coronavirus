@@ -1,25 +1,7 @@
 import numpy as np
-import sqlalchemy
 import pandas as pd
-from sqlalchemy.ext.automap import automap_base
-from sqlalchemy.orm import Session
-from sqlalchemy import create_engine, func
-from collections import OrderedDict
 from flask import Flask, jsonify, Response, render_template
-import psycopg2
 import datetime
-
-
-# #################################################
-# # Database Setup
-# #################################################
-# engine = create_engine('postgres+psycopg2://postgres:(password)@localhost:5432/Spotify')
-
-# # reflect an existing database into a new model
-# Base = automap_base()
-# # reflect the tables
-# Base.prepare(engine, reflect=True)
-
 
 #################################################
 # Flask Setup
@@ -36,16 +18,36 @@ def index():
 
 @app.route("/TNDeptHealth_counties")
 def viz_counties():
+    
+    #Scrape tn.gov for coronavirus data
     daily = "https://www.tn.gov/health/cedep/ncov.html"
     viral = pd.read_html(daily)
     df2 = viral[4]
-    TN_county = df2[:-1]
+    TN_county = df2[:-3]
     TN_county["County"]= TN_county["County"].str.split("County", n = 1, expand = True)
+    
+    #Read in and clean Population by County data
+    TNpop = pd.read_csv("Coronavirus/Covid_predictions/TN/Resources/Population Estimates by County.csv")
+    TNpop= TNpop.drop([96])
+    TNpop = TNpop.drop([0])
+    TNpop["Population Estimates by County"]= TNpop["Population Estimates by County"].str.split(" County", n = 1, expand = True)
+    TNpop = TNpop.rename(columns={'Population Estimates by County': 'County'})
+    TN_county_populations = TNpop.rename(columns={'Unnamed: 1': 'Population'})
+    TN_county_populations["Population"] = TN_county_populations["Population"].str.replace(",","").astype(int)
+    
+    #Merge two dataframes and perform calculations
+    TN_data = TN_county_populations.merge(TN_county,left_on='County',right_on='County', how='left')
+    TN_data["Percentage of County Population"] = round((TN_data["Cases"]/TN_data["Population"])*100,3)
+    TN_data=TN_data.sort_values("Cases", ascending=False).reset_index(drop=True).dropna()
+    
+    #export data for storage
     date = datetime.datetime.today()
     date_modify = str(date)
     date_for_export = date_modify[0:10]
-    TN_county.to_csv('C:/Users/clayf/Documents/Coronavirus/Covid_predictions/TN/Resources/' + date_for_export +'_counties.csv',index=False)
-    viral_counties = TN_county.to_json(orient='columns')
+    TN_data.to_csv('C:/Users/clayf/Documents/Coronavirus/Covid_predictions/TN/Resources/' + date_for_export +'_counties.csv',index=False)
+    
+    #send data to flask route as json for data visulization
+    viral_counties = TN_data.to_json(orient='columns')
 
     return viral_counties
 

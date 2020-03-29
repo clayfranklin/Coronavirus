@@ -6,6 +6,9 @@ d3.json(url5).then(function(data) {
         console.log(county_values)
     let county_names = Object.values(data["County"])
         console.log(county_names)
+    let county_percent = Object.values(data["Percentage of County Population"])
+        console.log(county_percent)
+    let population = Object.values(data["Population"])
     
         var trace1 = {
             x: county_names,
@@ -13,7 +16,7 @@ d3.json(url5).then(function(data) {
             mode: 'bar',
             opacity : .7,
             type: 'bar',
-            name: 'Counties',
+            name: '# of Cases',
             text: county_names,
             marker: { color : 'Cornflower Blue',
               size: 12,
@@ -23,18 +26,73 @@ d3.json(url5).then(function(data) {
             }
            }
           };
+
+          var trace2 = {
+            x: county_names,
+            y: county_percent,
+            zeroline: 'false',
+            yaxis:'y2',
+            mode: 'markers',
+            opacity : .7,
+            type: 'scatter',
+            name: '% of Population',
+            marker: { color : 'Slate Grey',
+              size: 7,
+              line: {
+                color: 'MediumPurple',
+                width: 1
+            }
+           }
+          };
         
+          var trace3 = {
+            x: county_names,
+            y: population,
+            xaxis: 'x2',
+            zeroline: 'false',
+            mode: 'line',
+            opacity : .7,
+            type: 'scatter',
+            name: '% of Population',
+            type: 'scatter',
+            width: 9
+            };
+           
           
-          var data = [ trace1 ];
+          
+          var data = [ trace1, trace2];
           
           var layout = {
             title: 'TN Counties and Coronavirus Cases',
+            
             xaxis: {
-              tickmode: 'auto'
+              tickmode: 'auto',
+              zeroline: 'false',
+              showdividers: 'false',
+              zerolinecolor: 'rgb(255,255,255)'
             },
+
             yaxis: {
-              title: 'Cases'
+              title: 'Cases',
+              showgrid: 'false',
+              zeroline: 'false',
+              showdividers: 'false',
+              zerolinecolor: 'rgb(255,255,255)'
+              
             },
+            yaxis2:{
+              title: '% of Population',
+              titlefont: {color: 'rgb(148, 103, 189)'},
+              tickfont: {color: 'rgb(148, 103, 189)'},
+              position: .99,
+              overlaying: 'y',
+              side: 'right',
+              zeroline: 'false',
+              showdividers: 'false',
+              zerolinecolor: 'rgb(255,255,255)'
+              
+            },
+            
           };
           
         
