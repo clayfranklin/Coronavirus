@@ -10,5 +10,5 @@
 
 
 ![Testing Data in TN](https://github.com/clayfranklin/Coronavirus/blob/master/Covid_predictions/TN/Resources/Testing_Data.png)
-![County Data in TN](https://github.com/clayfranklin/Coronavirus/blob/master/Covid_predictions/TN/Resources/percentage.png)
+![County Data in TN](https://github.com/clayfranklin/Coronavirus/blob/master/Covid_predictions/TN/Resources/percentage_.png)
 ![Age Data in TN](https://github.com/clayfranklin/Coronavirus/blob/master/Covid_predictions/TN/Resources/Age_Groups.png)
