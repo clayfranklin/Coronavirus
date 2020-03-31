@@ -1,4 +1,4 @@
-Laboratory Type,Positive Test,Negative Tests,Total
-State PH Lab,127,1271,1398
-Non-State PH Lab,1246,15694,16940
-Total,1373,16965,18338
+Laboratory Type,Positive Test,Negative Tests,Total,Date
+State PH Lab,151,1385,1536,2020-03-29
+Non-State PH Lab,1386,17652,19038,2020-03-29
+Total,1537,19037,20574,2020-03-29
