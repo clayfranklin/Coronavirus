@@ -2,7 +2,7 @@
 const url5 = "/TNDeptHealth_counties";
 d3.json(url5).then(function(data) {
   console.log(data);
-    let county_values = Object.values(data["Cases"])
+    let county_values = Object.values(data["Positive"])
         console.log(county_values)
     let county_names = Object.values(data["County"])
         console.log(county_names)

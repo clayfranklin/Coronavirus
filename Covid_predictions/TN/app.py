@@ -22,7 +22,7 @@ def viz_counties():
     #Scrape tn.gov for coronavirus data, remove uncessecary info 
     daily = "https://www.tn.gov/health/cedep/ncov.html"
     viral = pd.read_html(daily)
-    df2 = viral[4]
+    df2 = viral[5]
     TN_county = df2[:-3]
     TN_county=TN_county.rename(columns={'Patient county name': 'County'})
 
@@ -38,12 +38,15 @@ def viz_counties():
     
     #Merge two dataframes and perform calculations, and add a date column
     TN_data = TN_county_populations.merge(TN_county,left_on='County',right_on='County', how='left')
-    TN_data["Percentage of County Population"] = round((TN_data["Cases"]/TN_data["Population"])*100,3)
-    TN_data=TN_data.sort_values("Cases", ascending=False).reset_index(drop=True).dropna()
+    TN_data["Percentage of County Population"] = round((TN_data["Positive"]/TN_data["Population"])*100,3)
+    TN_data=TN_data.sort_values("Positive", ascending=False).reset_index(drop=True).dropna()
+    TN_data["Percent_Tested"] = round(((TN_data["Positive"]+TN_data["Negative"])/TN_data["Population"])*100,1)
+    TN_data.sort_values("Percent_Tested", ascending=False)
     date = datetime.datetime.today()
     date_modify = str(date)
     date_for_export = date_modify[0:10]
     TN_data["Date"] = date_for_export
+    TN_data = TN_data.dropna()
 
     #export data for storage
     TN_data.to_csv('C:/Users/clayf/Documents/Coronavirus/Covid_predictions/TN/Resources/' + date_for_export +'_counties.csv',index=False)
