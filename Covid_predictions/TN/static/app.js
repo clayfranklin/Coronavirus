@@ -1,13 +1,13 @@
 // REQUEST THE DATA
 const url5 = "/TNDeptHealth_counties";
 d3.json(url5).then(function(data) {
-  console.log(data);
+  // console.log(data);
     let county_values = Object.values(data["Positive"])
-        console.log(county_values)
+        // console.log(county_values)
     let county_names = Object.values(data["County"])
-        console.log(county_names)
+        // console.log(county_names)
     let county_percent = Object.values(data["Percentage of County Population"])
-        console.log(county_percent)
+        // console.log(county_percent)
     let population = Object.values(data["Population"])
     
         var trace1 = {
@@ -101,15 +101,15 @@ d3.json(url5).then(function(data) {
 
 const url = "/TNDeptHealth_overall";
 d3.json(url).then(function(data) {
-  console.log(data);
+  // console.log(data);
     let facility = Object.values(data["Laboratory Type"])
-        console.log(facility)
+        // console.log(facility)
     let positive = Object.values(data["Positive Test"])
-        console.log(positive)
+        // console.log(positive)
     let negative = Object.values(data["Negative Tests"])
-        console.log(negative)
+        // console.log(negative)
     let total = Object.values(data["Total"])
-        console.log(total)
+        // console.log(total)
         var trace1 = {
             x: facility,
             y: total,
@@ -189,11 +189,11 @@ d3.json(url).then(function(data) {
 
 const url2 = "/TNDeptHealth_age";
 d3.json(url2).then(function(data) {
-  console.log(data);
+  // console.log(data);
     let age_groups = Object.values(data["Age Ranges of Confirmed Cases"])
-        console.log(age_groups)
+        // console.log(age_groups)
     let age_cases = Object.values(data["Number_Cases"])
-        console.log(age_cases)
+        // console.log(age_cases)
 
 
   var trace1 = {
@@ -229,4 +229,9 @@ d3.json(url2).then(function(data) {
   
 
 Plotly.newPlot('my_dataviz', data, layout);
+});
+
+const url8 = "/TNDeptHealth_overtime";
+d3.json(url8).then(function(data) {
+  console.log(data);
 });

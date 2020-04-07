@@ -26,7 +26,7 @@ def viz_overtime():
     viral = pd.read_html(daily)
     df2 = viral[5]
     TN_county = df2[:-3]
-    TN_county.columns = ['County', 'Positive', 'Negative', 'Death']
+    TN_county=TN_county.rename(columns={'positives':'Positive','negatives':'Negative','Unnamed: 0': 'County', 'deaths':'Death'})
     TN_county["County"]=TN_county["County"].str.split(" County", expand = True)
 
     #add today's date 
@@ -55,7 +55,7 @@ def viz_overtime():
     TN_data["Percentage of County Population"] = round((TN_data["Positive"]/TN_data["Population"])*100,3)
     TN_data=TN_data.sort_values("Positive", ascending=False).reset_index(drop=True)
     TN_data["Percent_Tested"] = round(((TN_data["Positive"]+TN_data["Negative"])/TN_data["Population"])*100,1)
-    
+    TN_data.sort_values("Percent_Tested", ascending=False)
 
     #Merge daily data to historical data
     to_update=pd.read_csv("C:/Users/clayf/Documents/Coronavirus/Covid_predictions/TN/Resources/Synched/TN_cases_yesterday.csv")
@@ -64,16 +64,15 @@ def viz_overtime():
     TN_cases["Duplicates"]=TN_cases["County"]+TN_cases['Date']
     TN_cases = TN_cases.drop_duplicates(subset="Duplicates", keep="last")
     TN_up_to_date=TN_cases.drop('Duplicates', axis=1)
-    TN_up_to_date.sort_values("Positive", ascending=True)
-    TN_overtime=TN_up_to_date.reset_index(drop=True)
+    TN_up_to_date.reset_index(drop=True, inplace=True)
     time.sleep(5)
-    TN_overtime.to_csv("C:/Users/clayf/Documents/Coronavirus/Covid_predictions/TN/Resources/Synched/TN_cases_yesterday.csv")
+    TN_up_to_date.to_csv("C:/Users/clayf/Documents/Coronavirus/Covid_predictions/TN/Resources/Synched/TN_cases_yesterday.csv")
     
     #export daily data for storage
-    TN_overtime.to_csv('C:/Users/clayf/Documents/Coronavirus/Covid_predictions/TN/Resources/up_to_this_day_' + date_to_add +'.csv',index=False)
+    TN_up_to_date.to_csv('C:/Users/clayf/Documents/Coronavirus/Covid_predictions/TN/Resources/up_to_this_day_' + date_to_add +'.csv',index=False)
     
     #send data to flask route as json for data visulization
-    time_counties = TN_overtime.to_json(orient = 'columns')
+    time_counties = TN_up_to_date.to_json(orient='columns')
 
     return time_counties
 
@@ -118,7 +117,7 @@ def viz_counties():
     viral = pd.read_html(daily)
     df2 = viral[5]
     TN_county = df2[:-3]
-    TN_county.columns = ['County', 'Positive', 'Negative', 'Death']
+    TN_county=TN_county.rename(columns={'positives':'Positive','negatives':'Negative','Unnamed: 0': 'County', 'deaths':'Death'})
     TN_county["County"]=TN_county["County"].str.split(" County", expand = True)
 
     
@@ -141,7 +140,7 @@ def viz_counties():
     date_modify = str(date)
     date_for_export = date_modify[0:10]
     TN_data["Date"] = date_for_export
-    TN_data.reset_index(drop=True)
+    
     
 
     #export data for storage
