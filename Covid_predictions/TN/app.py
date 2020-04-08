@@ -60,12 +60,12 @@ def viz_overtime():
     #Merge daily data to historical data
     to_update=pd.read_csv("C:/Users/clayf/Documents/Coronavirus/Covid_predictions/TN/Resources/Synched/TN_cases_yesterday.csv")
     synched=TN_data.append(to_update, sort=True)
-    TN_cases=synched.sort_values(["County", "Date"],ascending=[0,1])
+    TN_cases=synched.sort_values(["County", "Date"], ascending=True)
     TN_cases["Duplicates"]=TN_cases["County"]+TN_cases['Date']
     TN_cases = TN_cases.drop_duplicates(subset="Duplicates", keep="last")
-    TN_up_to_date=TN_cases.drop('Duplicates', axis=1)
-    TN_up_to_date.sort_values("Positive", ascending=True)
-    TN_overtime=TN_up_to_date.reset_index(drop=True)
+    TN_overtime=TN_cases.drop('Duplicates', axis=1)
+    # TN_overtime=TN_overtime.drop('index', axis=1)
+    TN_overtime.reset_index(drop=True, inplace=True)
     time.sleep(5)
     TN_overtime.to_csv("C:/Users/clayf/Documents/Coronavirus/Covid_predictions/TN/Resources/Synched/TN_cases_yesterday.csv")
     

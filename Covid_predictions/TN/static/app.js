@@ -234,4 +234,44 @@ Plotly.newPlot('my_dataviz', data, layout);
 const url8 = "/TNDeptHealth_overtime";
 d3.json(url8).then(function(data) {
   console.log(data);
+  let dates = Object.values(data["Date"])
+        // console.log(age_groups)
+  let cases = Object.values(data["Positive"])
+        // console.log(age_cases)
+  let counties = Object.values(data['County'])
+  
+  var trace1 = {
+    x: dates,
+    y: cases,
+    mode: 'markers',
+    opacity : .7,
+    type: 'bar',
+    name: 'counties',
+    text: cases,
+    marker: { color : 'Blue',
+      size: 12,
+      line: {
+        color: 'MediumPurple',
+        width: 1
+    }
+   }
+  };
+
+  
+  var data = [ trace1 ];
+  
+  var layout = {
+    title: 'TN counties over time',
+    xaxis: {
+      title: 'Date',
+      tickmode: 'auto'
+    },
+    yaxis: {
+      title: 'Cases'
+    },
+  };
+  
+
+Plotly.newPlot('overtime', data, layout);
 });
+
