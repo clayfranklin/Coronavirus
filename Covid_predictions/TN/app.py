@@ -21,10 +21,10 @@ def index():
 @app.route("/TNDeptHealth_overtime")
 def viz_overtime():
     
-    #Scrape tn.gov for coronavirus data, remove uncessecary info 
+    #Scrape tn.gov for updated coronavirus data, remove uncessecary info 
     daily = "https://www.tn.gov/health/cedep/ncov.html"
     viral = pd.read_html(daily)
-    df2 = viral[5]
+    df2 = viral[8]
     TN_county = df2[:-3]
     TN_county.columns = ['County', 'Positive', 'Negative', 'Death']
     TN_county["County"]=TN_county["County"].str.split(" County", expand = True)
@@ -41,6 +41,15 @@ def viz_overtime():
     # date_to_add2 = date_modify[0:10]
     # TN_county["Date"]=date_to_add2
 
+    #read in historical data from NYtimes github, append to daily data, and clean
+    to_update=pd.read_csv("C:/Users/clayf/Documents/Coronavirus/Covid_predictions/TN/Resources/Synched/TN_cases_yesterday.csv")
+    synched=TN_county.append(to_update, sort=True)
+    TN_cases=synched.sort_values(["County", "Date"], ascending=True)
+    TN_cases["Duplicates"]=TN_cases["County"]+TN_cases['Date']
+    TN_cases = TN_cases.drop_duplicates(subset="Duplicates", keep="last")
+    TN_overtime=TN_cases.drop('Duplicates', axis=1)
+    TN_overtime.reset_index(drop=True, inplace=True)
+
     #Read in and clean Population by County data
     TNpop = pd.read_csv("Coronavirus/Covid_predictions/TN/Resources/Population Estimates by County.csv")
     TNpop= TNpop.drop([96])
@@ -50,30 +59,23 @@ def viz_overtime():
     TN_county_populations = TNpop.rename(columns={'Unnamed: 1': 'Population'})
     TN_county_populations["Population"] = TN_county_populations["Population"].str.replace(",","").astype(int)
     
-    #Merge daily data with populationa and perform calculations
-    TN_data = TN_county_populations.merge(TN_county,left_on='County',right_on='County', how='left')
-    TN_data["Percentage of County Population"] = round((TN_data["Positive"]/TN_data["Population"])*100,3)
+    #Merge historical to daily update
+    TN_data = TN_county_populations.merge(TN_overtime,left_on='County',right_on='County', how='left')
+    TN_data=TN_data.drop('Population_y', axis=1)
+    TN_data=TN_data.rename(columns={'Population_x':'Population'})
+    #create new columns with data
+    TN_data["Percentage of County with Coronavirus"] = round((TN_data["Positive"]/TN_data["Population"])*100,3)
     TN_data=TN_data.sort_values("Positive", ascending=False).reset_index(drop=True)
-    TN_data["Percent_Tested"] = round(((TN_data["Positive"]+TN_data["Negative"])/TN_data["Population"])*100,1)
+    TN_data["Percent of County Tested"] = round(((TN_data["Positive"]+TN_data["Negative"])/TN_data["Population"])*100,1)
     
-
-    #Merge daily data to historical data
-    to_update=pd.read_csv("C:/Users/clayf/Documents/Coronavirus/Covid_predictions/TN/Resources/Synched/TN_cases_yesterday.csv")
-    synched=TN_data.append(to_update, sort=True)
-    TN_cases=synched.sort_values(["County", "Date"], ascending=True)
-    TN_cases["Duplicates"]=TN_cases["County"]+TN_cases['Date']
-    TN_cases = TN_cases.drop_duplicates(subset="Duplicates", keep="last")
-    TN_overtime=TN_cases.drop('Duplicates', axis=1)
-    # TN_overtime=TN_overtime.drop('index', axis=1)
-    TN_overtime.reset_index(drop=True, inplace=True)
-    time.sleep(5)
-    TN_overtime.to_csv("C:/Users/clayf/Documents/Coronavirus/Covid_predictions/TN/Resources/Synched/TN_cases_yesterday.csv")
+    #Export daily data combined with past
+    TN_data.to_csv("C:/Users/clayf/Documents/Coronavirus/Covid_predictions/TN/Resources/Synched/TN_cases_yesterday.csv", index=False)
     
     #export daily data for storage
-    TN_overtime.to_csv('C:/Users/clayf/Documents/Coronavirus/Covid_predictions/TN/Resources/up_to_this_day_' + date_to_add +'.csv',index=False)
+    TN_data.to_csv('C:/Users/clayf/Documents/Coronavirus/Covid_predictions/TN/Resources/up_to_this_day_' + date_to_add +'.csv',index=False)
     
     #send data to flask route as json for data visulization
-    time_counties = TN_overtime.to_json(orient = 'columns')
+    time_counties = TN_data.to_json(orient = 'columns')
 
     return time_counties
 
@@ -98,15 +100,15 @@ def viz_overall():
 def viz_age():
     daily = "https://www.tn.gov/health/cedep/ncov.html"
     viral = pd.read_html(daily)
-    df3 = viral[3]
-    group_cleaned = df3.drop([10])
-    age_groups = group_cleaned.rename(columns={'Age Ranges of Confirmed Cases.1': 'Number_Cases'})
+    df2 = viral[2]
+    group_cleaned = df2.drop([9])
+    group_cleaned.columns = ['Age Ranges of Confirmed Cases', 'Number_Cases', 'Number of Deaths']
     date = datetime.datetime.today()
     date_modify = str(date)
     date_for_export = date_modify[0:10]
-    age_groups["Date"] = date_for_export
-    age_groups.to_csv('C:/Users/clayf/Documents/Coronavirus/Covid_predictions/TN/Resources/' + date_for_export +'_age.csv',index=False)
-    viral_age = age_groups.to_json(orient='columns')
+    group_cleaned["Date"] = date_for_export
+    group_cleaned.to_csv('C:/Users/clayf/Documents/Coronavirus/Covid_predictions/TN/Resources/' + date_for_export +'_age.csv',index=False)
+    viral_age = group_cleaned.to_json(orient='columns')
 
     return viral_age
 
@@ -116,7 +118,7 @@ def viz_counties():
     #Scrape tn.gov for coronavirus data, remove uncessecary info 
     daily = "https://www.tn.gov/health/cedep/ncov.html"
     viral = pd.read_html(daily)
-    df2 = viral[5]
+    df2 = viral[8]
     TN_county = df2[:-3]
     TN_county.columns = ['County', 'Positive', 'Negative', 'Death']
     TN_county["County"]=TN_county["County"].str.split(" County", expand = True)
