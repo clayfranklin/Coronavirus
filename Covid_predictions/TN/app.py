@@ -4,6 +4,8 @@ from flask import Flask, jsonify, Response, render_template
 import datetime
 from datetime import timedelta
 import time
+from splinter import Browser
+from bs4 import BeautifulSoup
 
 #################################################
 # Flask Setup
@@ -154,6 +156,35 @@ def viz_counties():
 
     return viral_counties
 
+@app.route("/TNDeptHealth_gender")
+def gender():
+    daily = "https://www.tn.gov/health/cedep/ncov.html"
+    viral = pd.read_html(daily)
+    df3=viral[7]
+    date = datetime.datetime.today()
+    date_modify = str(date)
+    date_for_export = date_modify[0:10]
+    df3["Date"] = date_for_export
+    df3.to_json(orient='columns')
+    df3.to_csv('C:/Users/clayf/Documents/Coronavirus/Covid_predictions/TN/Resources/' + date_for_export +'_gender.csv',index=False)
+
+    return df3
+
+@app.route("/TNDeptHealth_ethnicity")
+def ethnicity():
+    daily = "https://www.tn.gov/health/cedep/ncov.html"
+    viral = pd.read_html(daily)
+    df=viral[4]
+    df.iloc[2,0]='Hispanic'
+    date = datetime.datetime.today()
+    date_modify = str(date)
+    date_for_export = date_modify[0:10]
+    df["Date"] = date_for_export
+    df.to_csv('C:/Users/clayf/Documents/Coronavirus/Covid_predictions/TN/Resources/' + date_for_export +'_ethnicity.csv',index=False)
+
+    df.to_json(orient='columns')
+
+    return df
 
 if __name__ == '__main__':
     app.run(debug=True)
