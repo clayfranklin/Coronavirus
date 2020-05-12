@@ -1,10 +1,10 @@
 # Coronavirus in Tennessee 
 
 <p>Data visualization for TN specific coronavirus cases<p>
-<p>ETL with Python, Flask<p>
+<p>ETL with Python, Flask and Splinter <p>
 <p>Visualization with Javascript & Plotly</p>
 <p>Data sourced from TN Dept of Health</p>
-<p>Data collection can then be compared over time, with daily updates to visualizations</p>
+<p>the app automatically scrapes the TN Depth of Health and updates data visuals/p>
 <p>Update 4/13 - TN Dept of Health no longer updating to html table, but to a PDF</p>
 <p>Update 5/6 - TN Dept of Health has downloadable data sets! </p>
 
