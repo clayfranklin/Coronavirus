@@ -233,22 +233,27 @@ Plotly.newPlot('my_dataviz', data, layout);
 
 const url8 = "/TNDeptHealth_overtime";
 d3.json(url8).then(function(data) {
-  console.log(data);
-  let dates = Object.values(data["Date"])
+  // console.log(data);
+  let dates = Object.values(data["DATE"])
         // console.log(age_groups)
-  let cases = Object.values(data["Positive"])
+  let active_cases = Object.values(data["TOTAL_ACTIVE"])
         // console.log(age_cases)
-  let counties = Object.values(data['County'])
+  let counties = Object.values(data['COUNTY'])
+  let new_cases = Object.values(data["NEW_CASES"])
+  let total_cases = Object.values(data["TOTAL_CASES"])
+  let total_recovered = Object.values(data["TOTAL_RECOVERED"])
+    console.log(total_cases)
+    console.log(total_recovered)
   
   var trace1 = {
     x: dates,
-    y: cases,
+    y: active_cases,
     mode: 'markers',
     opacity : .7,
     type: 'bar',
-    name: 'counties',
-    text: cases,
-    marker: { color : 'Blue',
+    name: 'active cases',
+    text: counties,
+    marker: { color : 'Sky Blue',
       size: 12,
       line: {
         color: 'MediumPurple',
@@ -256,12 +261,41 @@ d3.json(url8).then(function(data) {
     }
    }
   };
+  var trace2 = {
+    x: dates,
+    y: new_cases,
+    opacity : .7,
+    type: 'line',
+    color: 'Red',
+    name: 'new cases',
+  
+  };
+
+  var trace3 = {
+    x: dates,
+    y: total_cases,
+    opacity : .7,
+    type: 'line',
+    color: 'Black',
+    name: 'total cases',
+    
+  };
+
+  var trace4 = {
+    x: dates,
+    y: total_recovered,
+    opacity : .7,
+    type: 'line',
+    color: 'Green',
+    name: 'total recovered',
+   
+  };
 
   
-  var data = [ trace1 ];
+  var data = [ trace1,trace2,trace3,trace4 ];
   
   var layout = {
-    title: 'TN counties over time',
+    title: 'Davidson "ACTIVE CASES vs TOTAL and RECOVERED"',
     xaxis: {
       title: 'Date',
       tickmode: 'auto'
@@ -269,6 +303,16 @@ d3.json(url8).then(function(data) {
     yaxis: {
       title: 'Cases'
     },
+    legend: {
+      x: 0,
+      y: 1,
+      traceorder: 'normal',
+      font: {
+        family: 'sans-serif',
+        size: 12,
+        color: '#000'
+      },
+    }
   };
   
 

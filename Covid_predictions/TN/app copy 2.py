@@ -6,12 +6,19 @@ from datetime import timedelta
 import time
 from splinter import Browser
 from bs4 import BeautifulSoup
+import shutil
+import os
+
 
 #################################################
 # Flask Setup
 #################################################
 app = Flask(__name__)
 
+def init_browser():
+    # @NOTE: Replace the path with your actual path to the chromedriver
+    executable_path = {'executable_path': "C:/Users/clayf/Documents/web-scraping-challenge/Mission_to_Mars/chromedriver.exe"}
+    return Browser("chrome", **executable_path, headless=False)
 
 @app.route("/")
 def index():
@@ -21,29 +28,26 @@ def index():
 
 #get latest data and store to right path
 @app.route("/scrape")
-def init_browser():
-    # @NOTE: Replace the path with your actual path to the chromedriver
-    executable_path = {'executable_path': "C:/Users/clayf/Documents/web-scraping-challenge/Mission_to_Mars/chromedriver.exe"}
-    return Browser("chrome", **executable_path, headless=False)
+def get_the_stuff():
+
+    browser = init_browser()
+    url = 'https://www.tn.gov/health/cedep/ncov/data/downloadable-datasets.html'
+    browser.visit(url)
+    browser.click_link_by_partial_text('County')
+    print("data downloading, please wait")
+    return render_template("index.html")
+
+
     
-browser = init_browser()
-url = 'https://www.tn.gov/health/cedep/ncov/data/downloadable-datasets.html'
-browser.visit(url)
-browser.click_link_by_partial_text('County')
-
-import shutil
-shutil.move("C:/Users/clayf/Downloads/Public-Dataset-County-New.xlsx", "C:/Users/clayf/Documents/Coronavirus/Covid_predictions/TN/Resources/daily.csv")
-
-
-
 @app.route("/TNDeptHealth_overtime")
 def viz_overtime():
-    
+    #move file to correct place
+    shutil.move("C:/Users/clayf/Downloads/Public-Dataset-County-New.xlsx", "C:/Users/clayf/Documents/Coronavirus/Covid_predictions/TN/Resources/TN_DH/daily.xlsx")
     #add today's date 
     date = datetime.datetime.today()
     date_modify=str(date)
     date_to_add = date_modify[0:10]
-    TN_county["Date"]=date_to_add
+    
 
     #add this date if your slacking and did it after midnight, SLACKER!!!! 
     # d = datetime.datetime.today() - timedelta(days=1)
@@ -62,24 +66,21 @@ def viz_overtime():
     TN_county_populations["Population"] = TN_county_populations["Population"].str.replace(",","").astype(int)
     
     # Read in daily info
-    TN=pd.read_excel("C:/Users/clayf/Documents/Coronavirus/Covid_predictions/TN/Resources/Public-Dataset-County-New (5).xlsx")
+    time.sleep(5)
+    TN=pd.read_excel("C:/Users/clayf/Documents/Coronavirus/Covid_predictions/TN/Resources/TN_DH/daily.xlsx")
+    TN["DATE"]=TN["DATE"].astype(str)
     
     #Merge daily with population
     withPop=TN.merge(TN_county_populations,left_on='COUNTY',right_on='County', how='left')
     
     #create new columns with data
-    TN_data["Percentage of County with Coronavirus"] = round((TN_data["Positive"]/TN_data["Population"])*100,3)
-    TN_data=TN_data.sort_values("Positive", ascending=False).reset_index(drop=True)
-    TN_data["Percent of County Tested"] = round(((TN_data["Positive"]+TN_data["Negative"])/TN_data["Population"])*100,1)
-    
-    #Export daily data combined with past
-    TN_data.to_csv("C:/Users/clayf/Documents/Coronavirus/Covid_predictions/TN/Resources/Synched/TN_cases_yesterday.csv", index=False)
-    
-    #export daily data for storage
-    TN_data.to_csv('C:/Users/clayf/Documents/Coronavirus/Covid_predictions/TN/Resources/up_to_this_day_' + date_to_add +'.csv',index=False)
-    
+    withPop["Percentage of County with Coronavirus"] = round((withPop["TOTAL_ACTIVE"]/withPop["Population"])*100,3)
+    withPop["Percent of County Tested"] = round(((withPop["TOTAL_TESTS"]+withPop["NEG_TESTS"])/withPop["Population"])*100,1)
+    davidson=withPop[withPop["COUNTY"] == 'Davidson']
     #send data to flask route as json for data visulization
-    time_counties = TN_data.to_json(orient = 'columns')
+    time_counties = davidson.to_json(orient = 'columns')
+
+    render_template("index.html")
 
     return time_counties
 
@@ -188,5 +189,5 @@ def viz_overtime():
 
 #     return df
 
-# if __name__ == '__main__':
-#     app.run(debug=True)
+if __name__ == '__main__':
+    app.run(debug=True)
