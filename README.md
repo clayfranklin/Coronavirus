@@ -9,7 +9,7 @@
 <p>Update 5/6 - TN Dept of Health has downloadable data sets! </p>
 
 
-![Testing Data in TN](https://github.com/clayfranklin/Coronavirus/blob/master/Covid_predictions/TN/Resources/Davidson_Active.png
+![Active in TN](https://github.com/clayfranklin/Coronavirus/blob/master/Covid_predictions/TN/Resources/Davidson_Active.png)
 
 <h4> The viz above shows the total cases, active, new, and recovered </h4>
 
