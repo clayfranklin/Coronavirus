@@ -2,102 +2,89 @@
 const url5 = "/TNDeptHealth_counties";
 d3.json(url5).then(function(data) {
   // console.log(data);
-    let county_values = Object.values(data["Positive"])
-        // console.log(county_values)
-    let county_names = Object.values(data["County"])
-        // console.log(county_names)
-    let county_percent = Object.values(data["Percentage of County Population"])
-        // console.log(county_percent)
-    let population = Object.values(data["Population"])
-    
-        var trace1 = {
-            x: county_names,
-            y: county_values,
-            mode: 'bar',
-            opacity : .7,
-            type: 'bar',
-            name: '# of Cases',
-            text: county_names,
-            marker: { color : 'Cornflower Blue',
-              size: 12,
-              line: {
-                color: 'MediumPurple',
-                width: 1
-            }
-           }
-          };
+  let dates = Object.values(data["DATE"])
+  // console.log(age_groups)
+  let active_cases = Object.values(data["TOTAL_ACTIVE"])
+  // console.log(age_cases)
+  let counties = Object.values(data['COUNTY'])
+  let new_cases = Object.values(data["NEW_CASES"])
+  let total_cases = Object.values(data["TOTAL_CASES"])
+  let total_recovered = Object.values(data["TOTAL_RECOVERED"])
+  console.log(total_cases)
+  console.log(total_recovered)
 
-          var trace2 = {
-            x: county_names,
-            y: county_percent,
-            zeroline: 'false',
-            yaxis:'y2',
-            mode: 'markers',
-            opacity : .7,
-            type: 'scatter',
-            name: '% of Population',
-            marker: { color : 'Slate Grey',
-              size: 7,
-              line: {
-                color: 'MediumPurple',
-                width: 1
-            }
-           }
-          };
-        
-          var trace3 = {
-            x: county_names,
-            y: population,
-            xaxis: 'x2',
-            zeroline: 'false',
-            mode: 'line',
-            opacity : .7,
-            type: 'scatter',
-            name: '% of Population',
-            type: 'scatter',
-            width: 9
-            };
-           
-          
-          
-          var data = [ trace1, trace2];
-          
-          var layout = {
-            title: 'TN Counties and Coronavirus Cases',
-            
-            xaxis: {
-              tickmode: 'auto',
-              zeroline: 'false',
-              showdividers: 'false',
-              zerolinecolor: 'rgb(255,255,255)'
-            },
+  var trace1 = {
+x: dates,
+y: active_cases,
+mode: 'markers',
+opacity : .7,
+type: 'bar',
+name: 'active cases',
+text: counties,
+marker: { color : 'Sky Blue',
+size: 12,
+line: {
+  color: 'MediumPurple',
+  width: 1
+}
+}
+};
+  var trace2 = {
+x: dates,
+y: new_cases,
+opacity : .7,
+type: 'line',
+color: 'Red',
+name: 'new cases',
 
-            yaxis: {
-              title: 'Cases',
-              showgrid: 'false',
-              zeroline: 'false',
-              showdividers: 'false',
-              zerolinecolor: 'rgb(255,255,255)'
-              
-            },
-            yaxis2:{
-              title: '% of Population',
-              titlefont: {color: 'rgb(148, 103, 189)'},
-              tickfont: {color: 'rgb(148, 103, 189)'},
-              position: .99,
-              overlaying: 'y',
-              side: 'right',
-              zeroline: 'false',
-              showdividers: 'false',
-              zerolinecolor: 'rgb(255,255,255)'
-              
-            },
-            
-          };
+};
+
+  var trace3 = {
+x: dates,
+y: total_cases,
+opacity : .7,
+type: 'line',
+color: 'Black',
+name: 'total cases',
+
+};
+
+  var trace4 = {
+x: dates,
+y: total_recovered,
+opacity : .7,
+type: 'line',
+color: 'Green',
+name: 'total recovered',
+};
+
+
+var data = [ trace1,trace2,trace3,trace4 ];
+
+var layout = {
+title: 'All Counties "ACTIVE CASES vs TOTAL and RECOVERED"',
+xaxis: {
+title: 'Date',
+tickmode: 'auto'
+},
+yaxis: {
+title: 'Cases'
+},
+legend: {
+x: 0,
+y: 1,
+traceorder: 'normal',
+font: {
+  family: 'sans-serif',
+  size: 12,
+  color: '#000'
+},
+}
+};
           
         
-        Plotly.newPlot('histogram', data, layout);
-        });
+Plotly.newPlot('histogram', data, layout);
+});
 
 const url = "/TNDeptHealth_overall";
 d3.json(url).then(function(data) {

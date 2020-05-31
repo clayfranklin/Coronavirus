@@ -77,6 +77,7 @@ def viz_overtime():
     withPop["Percentage of County with Coronavirus"] = round((withPop["TOTAL_ACTIVE"]/withPop["Population"])*100,3)
     withPop["Percent of County Tested"] = round(((withPop["TOTAL_TESTS"]+withPop["NEG_TESTS"])/withPop["Population"])*100,1)
     davidson=withPop[withPop["COUNTY"] == 'Davidson']
+    davidson.to_csv("C:/Users/clayf/Documents/Coronavirus/Covid_predictions/TN/Resources/TN_DH/forGDS.csv", index=False, encoding ="UTF-8")
     #send data to flask route as json for data visulization
     time_counties = davidson.to_json(orient = 'columns')
 
@@ -117,47 +118,45 @@ def viz_overtime():
 
 #     return viral_age
 
-# @app.route("/TNDeptHealth_counties")
-# def viz_counties():
+@app.route("/TNDeptHealth_counties")
+def viz_counties():
     
-#     #Scrape tn.gov for coronavirus data, remove uncessecary info 
-#     daily = "https://www.tn.gov/health/cedep/ncov.html"
-#     viral = pd.read_html(daily)
-#     df2 = viral[8]
-#     TN_county = df2[:-3]
-#     TN_county.columns = ['County', 'Positive', 'Negative', 'Death']
-#     TN_county["County"]=TN_county["County"].str.split(" County", expand = True)
-
-    
-#     #Read in and clean Population by County data
-#     TNpop = pd.read_csv("Coronavirus/Covid_predictions/TN/Resources/Population Estimates by County.csv")
-#     TNpop= TNpop.drop([96])
-#     TNpop = TNpop.drop([0])
-#     TNpop["Population Estimates by County"]= TNpop["Population Estimates by County"].str.split(" County", n = 1, expand = True)
-#     TNpop = TNpop.rename(columns={'Population Estimates by County': 'County'})
-#     TN_county_populations = TNpop.rename(columns={'Unnamed: 1': 'Population'})
-#     TN_county_populations["Population"] = TN_county_populations["Population"].str.replace(",","").astype(int)
-    
-#     #Merge two dataframes and perform calculations, and add a date column
-#     TN_data = TN_county_populations.merge(TN_county,left_on='County',right_on='County', how='left')
-#     TN_data["Percentage of County Population"] = round((TN_data["Positive"]/TN_data["Population"])*100,3)
-#     TN_data=TN_data.sort_values("Positive", ascending=False).reset_index(drop=True)
-#     TN_data["Percent_Tested"] = round(((TN_data["Positive"]+TN_data["Negative"])/TN_data["Population"])*100,1)
-#     TN_data.sort_values("Percent_Tested", ascending=False)
-#     date = datetime.datetime.today()
-#     date_modify = str(date)
-#     date_for_export = date_modify[0:10]
-#     TN_data["Date"] = date_for_export
-#     TN_data.reset_index(drop=True)
+    date = datetime.datetime.today()
+    date_modify=str(date)
+    date_to_add = date_modify[0:10]
     
 
-#     #export data for storage
-#     TN_data.to_csv('C:/Users/clayf/Documents/Coronavirus/Covid_predictions/TN/Resources/' + date_for_export +'_counties.csv',index=False)
-    
-#     #send data to flask route as json for data visulization
-#     viral_counties = TN_data.to_json(orient='columns')
+    #add this date if your slacking and did it after midnight, SLACKER!!!! 
+    # d = datetime.datetime.today() - timedelta(days=1)
+    # date_modify=str(d)
+    # date_to_add2 = date_modify[0:10]
+    # TN_county["Date"]=date_to_add2
 
-#     return viral_counties
+
+    #Read in and clean Population by County data
+    TNpop = pd.read_csv("Coronavirus/Covid_predictions/TN/Resources/Population Estimates by County.csv")
+    TNpop= TNpop.drop([96])
+    TNpop = TNpop.drop([0])
+    TNpop["Population Estimates by County"]= TNpop["Population Estimates by County"].str.split(" County", n = 1, expand = True)
+    TNpop = TNpop.rename(columns={'Population Estimates by County': 'County'})
+    TN_county_populations = TNpop.rename(columns={'Unnamed: 1': 'Population'})
+    TN_county_populations["Population"] = TN_county_populations["Population"].str.replace(",","").astype(int)
+    
+    # Read in daily info
+    
+    TN=pd.read_excel("C:/Users/clayf/Documents/Coronavirus/Covid_predictions/TN/Resources/TN_DH/daily.xlsx")
+    TN["DATE"]=TN["DATE"].astype(str)
+    
+    #Merge daily with population
+    withPop=TN.merge(TN_county_populations,left_on='COUNTY',right_on='County', how='left')
+    
+    #create new columns with data
+    withPop["Percentage of County with Coronavirus"] = round((withPop["TOTAL_ACTIVE"]/withPop["Population"])*100,3)
+    withPop["Percent of County Tested"] = round(((withPop["TOTAL_TESTS"]+withPop["NEG_TESTS"])/withPop["Population"])*100,1)
+
+    all_counties = withPop.to_json(orient = 'columns')
+
+    return all_counties
 
 # @app.route("/TNDeptHealth_gender")
 # def gender():
