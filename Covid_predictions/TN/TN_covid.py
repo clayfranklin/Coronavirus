@@ -47,16 +47,16 @@ def get_more_stuff():
     print("data downloading, please wait")
     return render_template("index.html")
 
-@app.route("/TNDeptHealth_totals_overtime")
-def viz_overall_overtime():
-    #move file to correct place
-    shutil.move("C:/Users/clayf/Downloads/Public-Dataset-Daily-Case-Info.xlsx", "C:/Users/clayf/Documents/Coronavirus/Covid_predictions/TN/Resources/TN_DH/daily_total.xlsx")
-    time.sleep(5)
-    totals = pd.read_excel("Coronavirus/Covid_predictions/TN/Resources/TN_DH/daily_total.xlsx")
-    totals["DATE"]=totals["DATE"].astype(str)
-    total_TN = totals.to_json(orient = 'columns')
-    render_template("index.html")
-    return total_TN
+# @app.route("/TNDeptHealth_totals_overtime")
+# def viz_overall_overtime():
+#     #move file to correct place
+#     shutil.move("C:/Users/clayf/Downloads/Public-Dataset-Daily-Case-Info.xlsx", "C:/Users/clayf/Documents/Coronavirus/Covid_predictions/TN/Resources/TN_DH/daily_total.xlsx")
+#     time.sleep(5)
+#     totals = pd.read_excel("Coronavirus/Covid_predictions/TN/Resources/TN_DH/daily_total.xlsx")
+#     totals["DATE"]=totals["DATE"].astype(str)
+#     total_TN = totals.to_json(orient = 'columns')
+#     render_template("index.html")
+#     return total_TN
 
 @app.route("/TNDeptHealth_overtime")
 def viz_overtime():
@@ -76,7 +76,7 @@ def viz_overtime():
 
 
     #Read in and clean Population by County data
-    TNpop = pd.read_csv("Coronavirus/Covid_predictions/TN/Resources/Population Estimates by County.csv")
+    TNpop = pd.read_csv("C:/Users/clayf/Documents/Coronavirus/Covid_predictions/TN/Resources/Population Estimates by County.csv")
     TNpop= TNpop.drop([96])
     TNpop = TNpop.drop([0])
     TNpop["Population Estimates by County"]= TNpop["Population Estimates by County"].str.split(" County", n = 1, expand = True)

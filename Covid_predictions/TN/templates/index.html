@@ -7,7 +7,7 @@
   <meta name="description" content="">
   <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
   <meta name="generator" content="Jekyll v3.8.6">
-  <title>Spotify Charts</title>
+  <title>Davidson County Coronavirus Tracker</title>
   <!--Bootstrap Core CSS-->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" 
   integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
@@ -69,7 +69,7 @@
 
 <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
   <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Vanderbilt Data Bootcamp</a>
-  <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
+  <!-- <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search"> -->
   <ul class="navbar-nav px-3">
     <li class="nav-item text-nowrap">
     </li>
@@ -125,24 +125,11 @@
         </div> -->
       <!-- </div> -->
       <p><a class="btn btn-primary btn-lg" href="/scrape" role="button">Click for Data</a></p>
+      <p><a class="btn btn-primary btn-lg" href="/scrape2" role="button">Click for Data</a></p>
       <div class='tableauPlaceholder' id='viz1586315214019' style='position: relative'><noscript><a href='#'><img alt=' ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;TN&#47;TN_coronavirus_by_county&#47;Sheet1&#47;1_rss.png' style='border: none' /></a></noscript><object class='tableauViz'  style='display:none;'><param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> <param name='embed_code_version' value='3' /> <param name='site_root' value='' /><param name='name' value='TN_coronavirus_by_county&#47;Sheet1' /><param name='tabs' value='no' /><param name='toolbar' value='yes' /><param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;TN&#47;TN_coronavirus_by_county&#47;Sheet1&#47;1.png' /> <param name='animate_transition' value='yes' /><param name='display_static_image' value='yes' /><param name='display_spinner' value='yes' /><param name='display_overlay' value='yes' /><param name='display_count' value='yes' /></object></div>                <script type='text/javascript'>                    var divElement = document.getElementById('viz1586315214019');                    var vizElement = divElement.getElementsByTagName('object')[0];                    vizElement.style.width='100%';vizElement.style.height=(divElement.offsetWidth*0.75)+'px';                    var scriptElement = document.createElement('script');                    scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';                    vizElement.parentNode.insertBefore(scriptElement, vizElement);                </script>
       <div class="container-fluid">
-        <div class="row">      
-          <div id="bar">
-            <select id="selDataset" onchange="getData(this.value)">
-              <option value="USA">USA</option>
-              <option value="CAN">CANADA</option>
-              <option value="CHE">ACROSS THE ATLANTIC</option>
-            </select>
-          </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div id="plot">
-                </div>
-            </div>
-        </div>
-      <div class="row">
+
+      <!-- <div class="row">
         <div class="col-md-12">
         <div id="myDiv" width="1200" height="700"></div>
         </div>
@@ -150,13 +137,35 @@
       <div class="row">
         <div class="col-md-12">
         <div id="histogram" width="1200" height="700"></div>
-        </div>
-      </div> 
+        </div> -->
+      <!-- </div>  -->
       <div class="row">
         <div class="col-md-12">
         <div id="overtime" width="1200" height="700"></div>
         </div>
       </div>
+      <!-- <div class="row">
+        <div class="col-md-12">
+        <div id="totals_overtime" width="1200" height="700"></div>
+        </div>
+      </div> -->
+      <!-- <div class="row">      
+        <div id="bar">
+          <select id="selDataset" onchange="getData(this.value)">
+            <option value="Davidson">Davidson(Nashville Area)</option>
+            <option value="Shelby">Shelby(Memphis Area)</option>
+            <option value="Knox">Knox(Knoxville Area)</option>
+            <option value="Hamilton">Hamilton(Chattanooga Area)</option>
+            <option value="Rutherford">Rutherford(Murfreesboro Area)</option>
+          </select>
+        </div>
+      </div>
+      <div class="row">
+          <div class="col-md-12">
+              <div id="overtime">
+              </div>
+          </div>
+      </div> -->
       <!-- <p><a class="btn btn-primary btn-lg" href="/TNDeptHealth_overtime" role="button">Click for Data</a></p> -->
       <h1>       
 
@@ -165,7 +174,7 @@
 
       </h1>
         </div>
-      <h1>            Percentage of State population Tested <span class="badge badge-secondary">0.5%</span></h1>
+      <!-- <h1>            Percentage of State population Tested <span class="badge badge-secondary">1%</span></h1> -->
         </div>
         <h1>       
 
@@ -174,9 +183,9 @@
           
         
         </h1>
-      <div class="row">
+      <!-- <div class="row">
         <div class="col-md-12">
-        <div id="one_song"></div>
+        <div id="one_song"></div> -->
         <!-- <div class="col-md-6">
         <div id="positive"></div> -->
         
@@ -231,7 +240,7 @@ integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifw
 crossorigin="anonymous"></script>
 
 <script src="static/app.js"></script>
-<script src="static/app2.js"></script>
+<!-- <script src="static/app2.js"></script> -->
 <!-- <script src="static/bubble.js"></script> -->
 <script src="static/dashboard.js"></script>
 <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
