@@ -23,7 +23,7 @@ def init_browser():
 @app.route("/")
 def index():
     """Return the homepage."""
-
+   
     return render_template("index.html")
 
 #get latest data and store to right path
@@ -33,19 +33,20 @@ def get_the_stuff():
     browser = init_browser()
     url = 'https://www.tn.gov/health/cedep/ncov/data/downloadable-datasets.html'
     browser.visit(url)
-    browser.click_link_by_partial_text('County')
-    print("data downloading, please wait")
+    browser.click_link_by_partial_text('County New')
     return render_template("index.html")
 
-@app.route("/scrape2")
-def get_more_stuff():
+  
 
-    browser = init_browser()
-    url = 'https://www.tn.gov/health/cedep/ncov/data/downloadable-datasets.html'
-    browser.visit(url)
-    browser.click_link_by_partial_text('Daily')
-    print("data downloading, please wait")
-    return render_template("index.html")
+# @app.route("/scrape2")
+# def get_more_stuff():
+
+#     browser = init_browser()
+#     url = 'https://www.tn.gov/health/cedep/ncov/data/downloadable-datasets.html'
+#     browser.visit(url)
+#     browser.click_link_by_partial_text('Daily')
+#     print("data downloading, please wait")
+#     return render_template("index.html")
 
 # @app.route("/TNDeptHealth_totals_overtime")
 # def viz_overall_overtime():
@@ -61,11 +62,12 @@ def get_more_stuff():
 @app.route("/TNDeptHealth_overtime")
 def viz_overtime():
     #move file to correct place
-    shutil.move("C:/Users/clayf/Downloads/Public-Dataset-County-New.xlsx", "C:/Users/clayf/Documents/Coronavirus/Covid_predictions/TN/Resources/TN_DH/daily.xlsx")
+    # time.sleep(5)
+    # shutil.move("C:/Users/clayf/Downloads/Public-Dataset-County-New.xlsx", "C:/Users/clayf/Documents/Coronavirus/Covid_predictions/TN/Resources/TN_DH/daily.xlsx")
     #add today's date 
-    date = datetime.datetime.today()
-    date_modify=str(date)
-    date_to_add = date_modify[0:10]
+    # date = datetime.datetime.today()
+    # date_modify=str(date)
+    # date_to_add = date_modify[0:10]
     
 
     #add this date if your slacking and did it after midnight, SLACKER!!!! 
@@ -76,33 +78,33 @@ def viz_overtime():
 
 
     #Read in and clean Population by County data
-    TNpop = pd.read_csv("C:/Users/clayf/Documents/Coronavirus/Covid_predictions/TN/Resources/Population Estimates by County.csv")
-    TNpop= TNpop.drop([96])
-    TNpop = TNpop.drop([0])
-    TNpop["Population Estimates by County"]= TNpop["Population Estimates by County"].str.split(" County", n = 1, expand = True)
-    TNpop = TNpop.rename(columns={'Population Estimates by County': 'County'})
-    TN_county_populations = TNpop.rename(columns={'Unnamed: 1': 'Population'})
-    TN_county_populations["Population"] = TN_county_populations["Population"].str.replace(",","").astype(int)
+    # TNpop = pd.read_csv("C:/Users/clayf/Documents/Coronavirus/Covid_predictions/TN/Resources/Population Estimates by County.csv")
+    # TNpop= TNpop.drop([96])
+    # TNpop = TNpop.drop([0])
+    # TNpop["Population Estimates by County"]= TNpop["Population Estimates by County"].str.split(" County", n = 1, expand = True)
+    # TNpop = TNpop.rename(columns={'Population Estimates by County': 'County'})
+    # TN_county_populations = TNpop.rename(columns={'Unnamed: 1': 'Population'})
+    # TN_county_populations["Population"] = TN_county_populations["Population"].str.replace(",","").astype(int)
     
     # Read in daily info
     # time.sleep(5)
-    TN=pd.read_excel("C:/Users/clayf/Documents/Coronavirus/Covid_predictions/TN/Resources/TN_DH/daily.xlsx")
+    TN=pd.read_excel("C:/Users/clayf/Downloads/Public-Dataset-County-New.xlsx")
     TN["DATE"]=TN["DATE"].astype(str)
     
     #Merge daily with population
-    withPop=TN.merge(TN_county_populations,left_on='COUNTY',right_on='County', how='left')
+    # withPop=TN.merge(TN_county_populations,left_on='COUNTY',right_on='County', how='left')
     
-    #create new columns with data
-    withPop["Percentage of County with Coronavirus"] = round((withPop["TOTAL_ACTIVE"]/withPop["Population"])*100,3)
-    withPop["Percent of County Tested"] = round(((withPop["TOTAL_TESTS"]+withPop["NEG_TESTS"])/withPop["Population"])*100,1)
-    davidson=withPop[withPop["COUNTY"] == 'Davidson']
+    # #create new columns with data
+    # withPop["Percentage of County with Coronavirus"] = round((withPop["TOTAL_ACTIVE"]/withPop["Population"])*100,3)
+    # withPop["Percent of County Tested"] = round(((withPop["TOTAL_TESTS"]+withPop["NEG_TESTS"])/withPop["Population"])*100,1)
+    davidson=TN[TN["COUNTY"] == "Davidson"]
     davidson.to_csv("C:/Users/clayf/Documents/Coronavirus/Covid_predictions/TN/Resources/TN_DH/forGDS.csv", index=False, encoding ="UTF-8")
     #send data to flask route as json for data visulization
     time_counties = davidson.to_json(orient = 'columns')
 
-    render_template("index.html")
-
+    
     return time_counties
+
 
 @app.route("/Davidson")
 def viz_davidson():
@@ -144,6 +146,13 @@ def rutherford():
     rutherfordTN=rutherford.to_json(orient = 'columns')
     return rutherfordTN
 
+@app.route("/sumner")
+def sumner():
+    TN=pd.read_excel("C:/Users/clayf/Downloads/Public-Dataset-County-New.xlsx")
+    TN["DATE"]=TN["DATE"].astype(str)
+    sumner=TN[TN["COUNTY"] == 'Sumner']
+    sumnerTN=sumner.to_json(orient = 'columns')
+    return sumnerTN
 
 
 # @app.route("/TNDeptHealth_overall")

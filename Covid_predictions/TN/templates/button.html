@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -67,9 +69,9 @@
   </style>
 <body>
 
-<!-- <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
-  <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Vanderbilt Data Bootcamp</a> -->
-  <!-- <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search"> -->
+<nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
+  <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Covid in Davidson County</a> -->
+   <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search"> -->
   <ul class="navbar-nav px-3">
     <li class="nav-item text-nowrap">
     </li>
@@ -110,7 +112,7 @@
           <img src="static/8587475872_4bde7eef96_o.png" class="img-fluid" alt="Megatron Image">
       </div> -->
       <!-- <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">Dashboard</h1> --> -->-->-->-->-->-->-->-->-->-->-->-->
+        <h1 class="h2">Dashboard</h1> -->
         <!--<div class="btn-toolbar mb-2 mb-md-0">
           <div class="btn-group mr-2">
             <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
@@ -123,11 +125,11 @@
         <div class="col-md-12">
         <div id="categories" width="1200" height="700"></div>
         </div> -->
-      <!-- </div> -->
-      <p><a class="btn btn-primary btn-lg" href="/scrape" role="button">Click to Load Data Visualization</a></p>
-      <!-- <p><a class="btn btn-primary btn-lg" href="/TNDeptHealth_overtime" role="button">Click to Load Visualization</a></p> -->
+<!--     
+      <p><a class="btn btn-primary btn-lg" href="/TNDepthHealth_overtime" role="button">Click to Load Data</a></p> -->
+      <!-- <p><a class="btn btn-primary btn-lg" href="/TNDeptHealth_overtime" role="button">Click to Load Visualization</a></p> --> -->
       <!-- <div class='tableauPlaceholder' id='viz1586315214019' style='position: relative'><noscript><a href='#'><img alt=' ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;TN&#47;TN_coronavirus_by_county&#47;Sheet1&#47;1_rss.png' style='border: none' /></a></noscript><object class='tableauViz'  style='display:none;'><param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> <param name='embed_code_version' value='3' /> <param name='site_root' value='' /><param name='name' value='TN_coronavirus_by_county&#47;Sheet1' /><param name='tabs' value='no' /><param name='toolbar' value='yes' /><param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;TN&#47;TN_coronavirus_by_county&#47;Sheet1&#47;1.png' /> <param name='animate_transition' value='yes' /><param name='display_static_image' value='yes' /><param name='display_spinner' value='yes' /><param name='display_overlay' value='yes' /><param name='display_count' value='yes' /></object></div>                <script type='text/javascript'>                    var divElement = document.getElementById('viz1586315214019');                    var vizElement = divElement.getElementsByTagName('object')[0];                    vizElement.style.width='100%';vizElement.style.height=(divElement.offsetWidth*0.75)+'px';                    var scriptElement = document.createElement('script');                    scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';                    vizElement.parentNode.insertBefore(scriptElement, vizElement);                </script> -->
-      <div class="container-fluid">
+      <!-- <div class="container-fluid"> -->
 
       <!-- <div class="row">
         <div class="col-md-12">
@@ -138,27 +140,12 @@
         <div class="col-md-12">
         <div id="histogram" width="1200" height="700"></div>
         </div> -->
-      <!-- </div>  -->
-      <!-- <div class="row">
+      </div> 
+      <div class="row">
         <div class="col-md-12">
         <div id="overtime" width="1200" height="700"></div>
         </div>
-      </div> -->
-      <div class="row">
-        <div class="col-sm">
-        <div id="overtime" width="1200" height="700"></div>
-        </div>
-      </div> -->
-      <div class="row">
-        <div class="col-sm">
-        <div id="sumner" width="1200" height="700"></div>
-        </div>
-      </div> -->
-      <div class="row">
-        <div class="col-sm">
-        <div id="shelby" width="1200" height="700"></div>
-        </div>
-      </div> -->
+      </div>
       <!-- <div class="row">      
         <div id="bar">
           <select id="selDataset" onchange="getData(this.value)">
@@ -167,70 +154,19 @@
             <option value="Knox">Knox(Knoxville Area)</option>
             <option value="Hamilton">Hamilton(Chattanooga Area)</option>
             <option value="Rutherford">Rutherford(Murfreesboro Area)</option>
-          </select>
-        </div>
-      </div>
-      <div class="row">
-          <div class="col-md-12">
-              <div id="overtime">
-              </div>
-          </div>
-      </div> -->
-      <!-- <p><a class="btn btn-primary btn-lg" href="/TNDeptHealth_overtime" role="button">Click for Data</a></p> -->
-      <h1>       
+          </select> -->
 
+   
+      
 
-
-
-      </h1>
-        </div>
-      <!-- <h1>            Percentage of State population Tested <span class="badge badge-secondary">1%</span></h1> -->
-        </div>
-        <h1>       
-
-
-
-          
-        
-        </h1>
-      <!-- <div class="row">
-        <div class="col-md-12">
-        <div id="one_song"></div> -->
-        <!-- <div class="col-md-6">
-        <div id="positive"></div> -->
-        
-      <script src="https://d3js.org/d3.v4.js"></script>
-
-<!-- Create a div where the graph will take place -->
-<!-- <p>
-  <label># bins</label>
-  <input type="number" min="1" max="100" step="30" value="20" id="nBin">
-</p> -->
-      <br>
-      <!-- <div class="row">       -->
-        <!-- <div id="bar">
-          <select id="selDataset" onchange="getData(this.value)">
-            <option value="USA">Artist / Streams</option>
-            <option value="CAN">Key</option>
-            <option value="CHE">Danceability</option>
-          </select>
-        </div>
-      </div>
-      <div class="row">
-          <div class="col-md-12">
-              <div id="plot">
-              </div>
-          </div>
-      </div>
-       -->
     </main>
 </div>
 
-<!-- API key -->
-<!-- <script type="text/javascript" src="static/config.js"></script>
- Our JS -->
-<!-- <script type="text/javascript" src="static/logic.js"></script> --> -->
 
+<script type="text/javascript" src="static/config.js"></script>
+
+<script type="text/javascript" src="static/logic.js"></script>
+<script src="https://d3js.org/d3.v4.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.5.0/d3.js"></script>
 <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" 
@@ -249,8 +185,8 @@ crossorigin="anonymous"></script>
 integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" 
 crossorigin="anonymous"></script>
 
-<script src="static/app.js"></script>
-<script src="static/sumner.js"></script>
+<!-- <script src="static/app.js"></script> -->
+<!-- <script src="static/app2.js"></script> -->
 <!-- <script src="static/bubble.js"></script> -->
 <script src="static/dashboard.js"></script>
 <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
